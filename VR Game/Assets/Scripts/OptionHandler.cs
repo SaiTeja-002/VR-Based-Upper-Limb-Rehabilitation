@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class OptionHandler : MonoBehaviour
 {
+    // Actions
+    public static Action TeleportAction = null;
+    public static Action IsGazingAction = null;
+    public static Action IsNotGazingAction = null;
+
+    public String sceneName;
     public Material onColor;
     public Material ofColor;
-    private float gazeCount;
+    public float gazeCount = 5.0f;
     private bool optionGaze;
 
     //Default State of Option : OF
@@ -18,14 +25,28 @@ public class OptionHandler : MonoBehaviour
     //Teleports When Conditions Are Met
     void Update()
     {
-
         //Option Choosing Logic
-        if(optionGaze)  
+        if(optionGaze)
+        {
             gazeCount -= Time.deltaTime;
+
+            // Subscribing to the IsGazingAction
+            if(IsGazingAction != null)
+                IsGazingAction();
+        }
+
+        else
+        {
+            // Subscribing to the IsNotGazingAction
+            if(IsNotGazingAction != null)
+                IsNotGazingAction();
+        }
 
         if(gazeCount <= 0)
         {
-            Debug.Log("Teleport\n");
+            if(TeleportAction != null)
+                TeleportAction();
+                
             gazeCount = 5.0f;
         }
     }

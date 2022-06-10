@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - MenuOption
+  - FishingLobby
+  - MainLobby
   layers:
   - Default
   - TransparentFX
