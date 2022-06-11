@@ -10,7 +10,6 @@ public class OptionHandler : MonoBehaviour
     public static Action IsGazingAction = null;
     public static Action IsNotGazingAction = null;
 
-    public String sceneName;
     public Material onColor;
     public Material ofColor;
     public float gazeCount = 5.0f;
