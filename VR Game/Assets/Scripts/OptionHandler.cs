@@ -7,8 +7,8 @@ public class OptionHandler : MonoBehaviour
 {
     // Actions
     public static Action<string> TeleportAction = null;
-    public static Action IsGazingAction = null;
-    public static Action IsNotGazingAction = null;
+    public static Action<string> IsGazingAction = null;
+    public static Action<string> IsNotGazingAction = null;
 
     public Material onColor;
     public Material ofColor;
@@ -31,14 +31,14 @@ public class OptionHandler : MonoBehaviour
 
             // Subscribing to the IsGazingAction
             if(IsGazingAction != null)
-                IsGazingAction();
+                IsGazingAction(gameObject.tag);
         }
 
         else
         {
             // Subscribing to the IsNotGazingAction
             if(IsNotGazingAction != null)
-                IsNotGazingAction();
+                IsNotGazingAction(gameObject.tag);
         }
 
         if(gazeCount <= 0)

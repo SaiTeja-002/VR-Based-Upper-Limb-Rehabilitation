@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657725, g: 0.49641198, b: 0.5748184, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641192, b: 0.5748182, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -872,17 +872,17 @@ PrefabInstance:
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1
+      value: -2.4
       objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.26
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
@@ -892,17 +892,17 @@ PrefabInstance:
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318267, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
@@ -928,6 +928,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539694747730409086, guid: 32ecf393de798bf4db8d892671baa933,
+        type: 3}
+      propertyPath: m_TagString
+      value: MenuScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32ecf393de798bf4db8d892671baa933, type: 3}

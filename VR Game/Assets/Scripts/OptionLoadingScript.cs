@@ -43,14 +43,16 @@ public class OptionLoadingScript : MonoBehaviour
     }
 
     /* The option is being gazed */
-    void Change()
+    void Change(string otherTag)
     {
-        loading = true;
+        if(otherTag == gameObject.tag)
+            loading = true;
     }
 
     /* If the option is not being gazed */
-    void Reset()
+    void Reset(string otherTag)
     {
-        loading = false;
+        if(otherTag == gameObject.tag)
+            loading = false;
     }
 }
