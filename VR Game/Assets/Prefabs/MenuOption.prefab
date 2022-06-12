@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 1053610663912199671}
   m_Layer: 0
   m_Name: Option
-  m_TagString: FishingLobby
+  m_TagString: FishingScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -695,7 +695,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976b0ddfe996e1d4dae51e8b128b209a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  change: {x: 1270, y: 0, z: 0}
+  change: {x: 1200, y: 0, z: 0}
+  loadBarLength: 5836.359
+  loadBarTime: 5
 --- !u!1001 &3310672745310375701
 PrefabInstance:
   m_ObjectHideFlags: 0

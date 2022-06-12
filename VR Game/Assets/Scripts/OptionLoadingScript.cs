@@ -5,23 +5,25 @@ using UnityEngine;
 
 public class OptionLoadingScript : MonoBehaviour
 {
-    public Vector3 change;
     private Vector3 initialScale;
     private bool loading = false;
+    public float loadBarLength;
+    public float loadBarTime;
+    private Vector3 change;
+
 
     void Start()
     {
         // Initial scale of the empty object
-        initialScale.x = 1.0f;
-        initialScale.y = 1.0f;
-        initialScale.z = 1.0f;
+        initialScale = new Vector3(1.0f,1.0f,1.0f);
+        change = new Vector3(loadBarLength/loadBarTime,0.0f,0.0f);
     }
 
     void Update()
     {
         // If the option is being gazed, then the empty object is scaled along the X-axis
         if(loading)
-            gameObject.transform.localScale = gameObject.transform.localScale + change*Time.deltaTime;
+            gameObject.transform.localScale += change*Time.deltaTime;
 
         // Else it is set to its initial scale
         else
@@ -32,16 +34,12 @@ public class OptionLoadingScript : MonoBehaviour
     {
         OptionHandler.IsGazingAction += Change;
         OptionHandler.IsNotGazingAction += Reset;
-        // OptionHandler.IsGazingAction += Toggle;
-        // OptionHandler.IsNotGazingAction += Toggle;
     }
 
     void OnDisable()
     {
         OptionHandler.IsGazingAction -= Change;
         OptionHandler.IsNotGazingAction -= Reset;
-        // OptionHandler.IsGazingAction += Toggle;
-        // OptionHandler.IsNotGazingAction += Toggle;
     }
 
     /* The option is being gazed */
@@ -55,9 +53,4 @@ public class OptionLoadingScript : MonoBehaviour
     {
         loading = false;
     }
-    
-    // void Toggle()
-    // {
-    //     loading = !loading;
-    // }
 }

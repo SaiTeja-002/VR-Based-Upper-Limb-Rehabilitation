@@ -6,7 +6,7 @@ using System;
 public class OptionHandler : MonoBehaviour
 {
     // Actions
-    public static Action TeleportAction = null;
+    public static Action<string> TeleportAction = null;
     public static Action IsGazingAction = null;
     public static Action IsNotGazingAction = null;
 
@@ -44,7 +44,7 @@ public class OptionHandler : MonoBehaviour
         if(gazeCount <= 0)
         {
             if(TeleportAction != null)
-                TeleportAction();
+                TeleportAction(gameObject.tag);
                 
             gazeCount = 5.0f;
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641192, b: 0.5748182, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657725, g: 0.49641198, b: 0.5748184, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -847,7 +847,7 @@ PrefabInstance:
     - target: {fileID: 1053610663912199657, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_TagString
-      value: MainLobby
+      value: MenuScene
       objectReference: {fileID: 0}
     - target: {fileID: 1053610663912199668, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
@@ -858,7 +858,7 @@ PrefabInstance:
         type: 3}
       propertyPath: loadingCube
       value: 
-      objectReference: {fileID: 1270506669}
+      objectReference: {fileID: 0}
     - target: {fileID: 1053610664918318266, guid: 32ecf393de798bf4db8d892671baa933,
         type: 3}
       propertyPath: m_Name
@@ -931,12 +931,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32ecf393de798bf4db8d892671baa933, type: 3}
---- !u!1 &1270506669 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 319738995, guid: 32ecf393de798bf4db8d892671baa933,
-    type: 3}
-  m_PrefabInstance: {fileID: 1270506668}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1786434425
 GameObject:
   m_ObjectHideFlags: 0

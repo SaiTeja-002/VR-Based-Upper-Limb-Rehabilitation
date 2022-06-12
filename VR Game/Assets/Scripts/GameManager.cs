@@ -24,26 +24,15 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         OptionHandler.TeleportAction += Teleport;
-        // BackToMenuScript.BackToMenuAction += TeleportToMenu;
     }
 
     void OnDisable()
     {
         OptionHandler.TeleportAction -= Teleport;
-        // BackToMenuScript.BackToMenuAction -= TeleportToMenu;
     }
 
-    void Teleport()
+    void Teleport(string scene)
     {
-        if(SceneManager.GetActiveScene().name == "MenuScene")
-            SceneManager.LoadScene("FishingScene");
-
-        else if(SceneManager.GetActiveScene().name == "FishingScene")
-            SceneManager.LoadScene("MenuScene");
-    }
-
-    void TeleportToMenu()
-    {
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene(scene);
     }
 }
