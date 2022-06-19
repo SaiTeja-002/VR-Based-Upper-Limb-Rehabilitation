@@ -419,7 +419,7 @@ MonoBehaviour:
   spinSpeed: 10
   jumpSpeed: 0.03
   timeCount: 0
-  timeLimit: 2
+  timeLimit: 4
 --- !u!1 &8539694747730409086
 GameObject:
   m_ObjectHideFlags: 0
