@@ -10,8 +10,9 @@ TagManager:
   - AirplaneScene
   - WristScene
   - FingerScene
-  - Fish
-  - Hook
+  - Enemy
+  - Asteroid
+  - SpaceShip
   layers:
   - Default
   - TransparentFX
