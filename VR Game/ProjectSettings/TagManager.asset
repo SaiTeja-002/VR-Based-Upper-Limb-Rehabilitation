@@ -10,6 +10,8 @@ TagManager:
   - AirplaneScene
   - WristScene
   - FingerScene
+  - Fish
+  - Hook
   layers:
   - Default
   - TransparentFX
