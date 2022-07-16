@@ -4,60 +4,171 @@ using UnityEngine;
 
 public class ObstacleGenerator : MonoBehaviour
 {
-    private List<GameObject> listOfObstacles = new List<GameObject>();
-    private GameObject obstacle;
-    public int maxObstacleSpawnCount;
-    private Vector3 obstaclePosition;
-    private Vector3 obstacleTransform;
-    public float safeDistance;
-    public float minObstacleSeperation;
-    private float lowerZLimit;
-    public float spawnRange;
-    private int choice = 1;
+    public GameObject player;
+    public GameObject asteroidParent;
 
-    // Start is called before the first frame update
+    public int maxNumberOfObstacles, xRange, yRange, zRange;
+    public float density;
+    public float minObstacleDistance, safeDistance, destroyDistance, spawnDistance;
+
+    private Vector3 asteroidPosition;
+    public GameObject[] asteroidTypes;      //Stores different asteroid types
+
+    private List<GameObject> asteroids = new List<GameObject>();                //Used to keep track of the asteroids
+    private List<GameObject> listOfAsteroidParents = new List<GameObject>();    //Used to keep track of the asteroid parents
+
+
+    void OnEnable()
+    {
+        GameOverCanvasScript.RetryAction += Reset;
+    }
+
+    void OnDisable()
+    {
+        GameOverCanvasScript.RetryAction -= Reset;
+    }
+
     void Start()
     {
-        safeDistance = 50f;
-        minObstacleSeperation = 5f;
-        maxObstacleSpawnCount = 10;
-        spawnRange = 15;
+        safeDistance = 3f;
 
-        if(choice == 1)
-            lowerZLimit = -spawnRange*safeDistance;
-        else
-            lowerZLimit = 0;
+        float volume = 8*(xRange)*(yRange)*(zRange);
+        maxNumberOfObstacles = (int) (density*volume);
 
-        for(int i=0; i<maxObstacleSpawnCount; i++)
-        {
-            SpawnPoint();
+        Debug.Log("Denisty - " + density);
+        Debug.Log("Vloume - " + volume);
+        Debug.Log("maxNumberOfObstacles - " + maxNumberOfObstacles);
 
-            while(Vector3.Distance(obstaclePosition, Vector3.zero) > safeDistance)
-                for(int j=0; j<i; j++)
-                    if(Vector3.Distance(listOfObstacles[j].transform.position, obstaclePosition) < minObstacleSeperation)
-                        SpawnPoint();
+        CreateAsteroidBelt();
+
+        // for(int i=0; i<maxNumberOfObstacles; i++)
+        // {
+        //     SelectAsteroidLocation();
+
+        //     // If the asteroid is too close to the player, a new random position is chosen
+        //     while(Vector3.Distance(asteroidPosition, player.transform.position) < safeDistance)
+        //     {
+        //         SelectAsteroidLocation();
+        //     }
+
+        //     for(int j=0; j<i; j++)
+        //     {
+        //         if(Vector3.Distance(asteroidPosition, asteroids[j].transform.position) < minObstacleDistance)
+        //         {
+        //             SelectAsteroidLocation();
+        //         }
+        //     }            
             
-            listOfObstacles.Add(Instantiate(obstacle, obstaclePosition, Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f))));
+        //     asteroids.Add(Instantiate(asteroidTypes[Random.Range(0, asteroidTypes.Length)], asteroidPosition, Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
 
-            listOfObstacles[i].transform.parent = this.transform;
+        //     transform. localScale = new Vector3(Random.Range(1, 10), Random.Range(1, 10), Random.Range(1, 10));
+
+        //     asteroids[i].transform.SetParent(asteroidParent.transform);
+        // }
+
+        // listOfAsteroidParents.Add(asteroidParent);
+
+        StartCoroutine(PingDistanceCheck());
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            CreateAsteroidParent();
+            // CreateAsteroidBelt();
+            listOfAsteroidParents.Add(Instantiate(listOfAsteroidParents[Random.Range(0, listOfAsteroidParents.Count)], player.transform.position, Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void CreateAsteroidBelt()
     {
-        
+        // GameObject newAsteroidParent = new GameObject();
+
+        for(int i=0; i<maxNumberOfObstacles; i++)
+        {
+            // newAsteroidParent.transform.position = player.transform.position;
+
+            SelectAsteroidLocation();
+
+            // If the asteroid is too close to the player, a new random position is chosen
+            while(Vector3.Distance(asteroidPosition, player.transform.position) < safeDistance)
+            {
+                SelectAsteroidLocation();
+            }
+
+            for(int j=0; j<i; j++)
+            {
+                if(Vector3.Distance(asteroidPosition, asteroids[j].transform.position) < minObstacleDistance)
+                {
+                    SelectAsteroidLocation();
+                }
+            }            
+            
+            asteroids.Add(Instantiate(asteroidTypes[Random.Range(0, asteroidTypes.Length)], asteroidPosition, Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
+
+            transform. localScale = new Vector3(Random.Range(1, 10), Random.Range(1, 10), Random.Range(1, 10));
+
+            asteroids[i].transform.SetParent(asteroidParent.transform);
+        }
+
+        listOfAsteroidParents.Add(asteroidParent);
     }
 
-    public void SpawnPoint()
+    /*A Function to choose a random position for the asteroid*/
+    void SelectAsteroidLocation()
     {
-        obstaclePosition.x = Random.Range(-spawnRange*safeDistance, spawnRange*safeDistance);
-        obstaclePosition.y = Random.Range(-spawnRange*safeDistance, spawnRange*safeDistance);
-        obstaclePosition.z = Random.Range(lowerZLimit, spawnRange*safeDistance);
-
-        // if(obstaclePosition.magnitude > 1)
-        //     obstaclePosition.Normalize();
-
-        // obstacleTransform = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+        asteroidPosition = new Vector3(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange), Random.Range(0, zRange));
     }
+
+    /*Function that destroys the asteroid parents if its distance from the player is greater than a threshold*/
+    void DistanceCheck()
+    {
+        for(int i=1; i<listOfAsteroidParents.Count; i++)
+        {
+            // If the distance between an asteroid parent and the player is greater than the threshold, the parent will be destroyed
+            
+            if(Vector3.Distance(player.transform.position, listOfAsteroidParents[i].transform.position) > destroyDistance)
+            {
+                Destroy(listOfAsteroidParents[i]);
+                listOfAsteroidParents.Remove(listOfAsteroidParents[i]);
+            }
+        }
+
+        if(Vector3.Distance(player.transform.position, listOfAsteroidParents[listOfAsteroidParents.Count-1].transform.position) > spawnDistance)
+        {
+            CreateAsteroidParent();
+            // CreateAsteroidBelt();
+        }
+    }
+
+    /*A Coroutine used to ping the DistanceCheck() for every 0.1 seconds*/
+    public IEnumerator PingDistanceCheck()
+    {
+        for(;;)
+        {
+            DistanceCheck();
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    void Reset()
+    {
+        for(int i=1; i<listOfAsteroidParents.Count; i++)
+        {
+            Destroy(listOfAsteroidParents[i]);
+            listOfAsteroidParents.Remove(listOfAsteroidParents[i]);
+        }
+
+        // Invoke("CreateAsteroidBelt", 2f);
+    }
+
+    void CreateAsteroidParent()
+    {
+        listOfAsteroidParents.Add(Instantiate(listOfAsteroidParents[Random.Range(0, listOfAsteroidParents.Count)], player.transform.position, Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
+    
+        // listOfAsteroidParents.Add(Instantiate(listOfAsteroidParents[Random.Range(0, listOfAsteroidParents.Count)], player.transform.position, player.transform.rotation));
+    }
+
 }
