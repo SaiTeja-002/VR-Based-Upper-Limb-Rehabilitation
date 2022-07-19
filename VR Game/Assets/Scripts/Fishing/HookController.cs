@@ -14,6 +14,7 @@ public class HookController : MonoBehaviour
     public Transform hookeEnd;
 
     private bool isRetracting;
+    private bool isThrowing;
     private bool isThrown;
     private bool canFloat;
     
@@ -23,6 +24,7 @@ public class HookController : MonoBehaviour
     void Start()
     {
         isRetracting = false;
+        isThrowing = false;
         isThrown = false;
         canFloat = false;
         positionSet = false;
@@ -57,32 +59,39 @@ public class HookController : MonoBehaviour
             transform.position += (pullDirection.normalized)*pullSpeed;
         }   
 
-        else if(isThrown)
+        else if(isThrowing && !isThrown)
         {
             Rigidbody objectBody = GetComponent<Rigidbody>();
             objectBody.velocity = throwSpeed*(transform.up-transform.right);
             objectBody.useGravity = true;
-            isThrown = false;
+            isThrown = true;
         }
     }
 
     //Throws The Hooke
     void Throw()
     {
-        isThrown = true;
-        canFloat = true;
-        positionSet = false;
-        GetComponent<Rigidbody>().isKinematic = false;
-        SetThrowSpeed();
-        StartCoroutine(Float());
+        if(!isThrowing)
+        {
+            isThrowing = true;
+            isThrown = false;
+            canFloat = true;
+            positionSet = false;
+            GetComponent<Rigidbody>().isKinematic = false;
+            SetThrowSpeed();
+            StartCoroutine(Float());
+        }
     }
 
     //Retracts The Hooke
     void Retract()
     {
-        isRetracting = true;
-        canFloat = false;
-        GetComponent<Rigidbody>().isKinematic = false;
+        if(!isRetracting)
+        {
+            isRetracting = true;
+            canFloat = false;
+            GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 
     //Makes The Hooke Float
@@ -92,6 +101,9 @@ public class HookController : MonoBehaviour
         {
             yield return null;
         }
+
+        //Throwing Done : Floating Begin
+        isThrowing = false;
 
         //Storing Position
         positionSet = true;
