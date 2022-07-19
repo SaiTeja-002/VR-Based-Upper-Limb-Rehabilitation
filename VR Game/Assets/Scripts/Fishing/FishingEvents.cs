@@ -10,21 +10,51 @@ public class FishingEvents : MonoBehaviour
 
     private bool toggleAction;
         
-    //First Change in Rotation : Throw
+    //Establishing Connection With HC-05
     void Start()
     {
         toggleAction = true;
+        BluetoothService.CreateBluetoothObject();
+        BluetoothService.StartBluetoothConnection("HC-05");
     }
 
-    //Constatnly Checks For Rotation
+    //Constantly Checks For Rotation
     void Update()
-    {        
+    {    
+        //For Testing On PC
         if (Input.GetKeyDown(KeyCode.Space))
-            ForwardAction();
+            RodThrown();
+            
+        else if (Input.GetKeyDown(KeyCode.R))
+            RodPulled();
+
+        //Tracking Rotation
+        try
+        {
+            //Taking Data From Gyro
+            string gyroValues = BluetoothService.ReadFromBluetooth();
+            string[] angles   = gyroValues.Split(' ');
+            
+            //Executing Action
+            if (angles[0].Length != 0)
+            {
+                float requiredAngle = float.Parse(angles[0]);
+
+                if (requiredAngle >= 90)
+                    RodThrown();
+
+                else if (requiredAngle <=0)
+                    RodPulled();
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
-    //Triggers The Required Action
-    void ForwardAction()
+    //Function For Testing 
+    void ExecuteAction()
     {
         if(toggleAction)
             RodThrown();

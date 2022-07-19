@@ -17,6 +17,8 @@ public class FishController : MonoBehaviour
     private bool reachedSurface;
     private bool isCaught;
 
+    public static Action FishCaught = null;
+
     // Enabling Particles + Fish Settings
     void Start()
     {
@@ -88,6 +90,7 @@ public class FishController : MonoBehaviour
             yield return null;
         }
         
+        FishCaught();
         transform.gameObject.SetActive(false);
    }
 }
