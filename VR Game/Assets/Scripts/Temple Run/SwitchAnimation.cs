@@ -26,14 +26,19 @@ public class SwitchAnimation : MonoBehaviour
             animator.Play("Right Diagonal 2");
         }
 
-        if(Input.GetKeyDown(KeyCode.J))
+        if(Input.GetKeyDown(KeyCode.UpArrow))
         {
             animator.Play("Jump");
         }
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.DownArrow))
         {
             animator.Play("Dive");
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            animator.Play("Slide");
         }
     }
 }
