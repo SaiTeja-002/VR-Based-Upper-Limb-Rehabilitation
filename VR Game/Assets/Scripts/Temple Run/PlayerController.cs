@@ -75,6 +75,15 @@ public class PlayerController : MonoBehaviour
             // rb.AddForce(0, 10, 0);
             rb.velocity = Vector3.up * 20f;
         }
+
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 50f;
+        }
+        else
+        {
+            speed = 7f;
+        }
         // else
         // {
         //     jump = false;
