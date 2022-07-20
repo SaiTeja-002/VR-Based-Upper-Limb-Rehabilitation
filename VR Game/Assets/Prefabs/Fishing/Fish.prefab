@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 288817279743979448}
+  - component: {fileID: 6999300677823355575}
   - component: {fileID: 6062727000440287659}
-  - component: {fileID: 7256381447968618641}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Fish
@@ -34,6 +34,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6999300677823355575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288817279743979449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025621cf6a5776f4fbe8a2ead541948a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbles: {fileID: 288817279856222235}
+  fish: {fileID: 5170453601196178591}
+  fishSwimSpeed: 5
+  fishSinkSpeed: 0.3
+  fishFloatSpeed: 1
+  shrinkSpeed: 0.03
 --- !u!65 &6062727000440287659
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47,24 +65,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6, y: 1.2, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7256381447968618641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288817279743979449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bef32552f22ff1428cae41d45e97bb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bubbles: {fileID: 288817279856222235}
-  fish: {fileID: 5170453601196178591}
-  fishSwimSpeed: 5
-  fishSinkSpeed: 0.3
-  fishFloatSpeed: 1
-  shrinkSpeed: 0.03
 --- !u!1 &288817279856222230
 GameObject:
   m_ObjectHideFlags: 0
