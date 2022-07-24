@@ -36,7 +36,7 @@ public class FishingEvents : MonoBehaviour
             string[] angles   = gyroValues.Split(' ');
             
             //Executing Action
-            if (angles[0].Length != 0)
+            if (angles.Length == 3)
             {
                 float requiredAngle = float.Parse(angles[0]);
 
