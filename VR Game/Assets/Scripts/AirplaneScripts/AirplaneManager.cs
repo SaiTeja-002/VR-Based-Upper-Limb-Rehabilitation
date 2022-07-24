@@ -50,6 +50,9 @@ public class AirplaneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BluetoothService.CreateBluetoothObject();
+        BluetoothService.StartBluetoothConnection("HC-05");
+
         repeatCount = 1;
         materialIndex = 0;
         prevIndex = materialIndex;

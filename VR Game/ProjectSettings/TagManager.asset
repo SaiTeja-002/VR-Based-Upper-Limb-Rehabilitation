@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - Asteroid
   - SpaceShip
+  - Obstacle
   layers:
   - Default
   - TransparentFX

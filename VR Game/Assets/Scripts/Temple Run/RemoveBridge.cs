@@ -10,12 +10,12 @@ public class RemoveBridge : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerManager.RemoveBridgeAction += RandomDisable;
+        TerrainManager.RemoveBridgeAction += RandomDisable;
     }
 
     void OnDisable()
     {
-        PlayerManager.RemoveBridgeAction -= RandomDisable;
+        TerrainManager.RemoveBridgeAction -= RandomDisable;
     }
 
     // Start is called before the first frame update
@@ -37,14 +37,9 @@ public class RemoveBridge : MonoBehaviour
 
         // count = Mathf.FloorToInt(childs/4);
 
-        
-        Debug.Log("Childs - " + childs);
-        Debug.Log("Count - " + count);
-
         for(int i=0; i<count; i++)
         {
             int randomChildIndex = Random.Range(0, childs);
-            Debug.Log("bridge - " + randomChildIndex);
             transform.GetChild(randomChildIndex).gameObject.SetActive(false);
 
             prevIndex = i;

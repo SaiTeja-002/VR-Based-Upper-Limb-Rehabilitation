@@ -7,6 +7,18 @@ public class SwitchAnimation : MonoBehaviour
 
     private Animator animator;
 
+    void OnEnable()
+    {
+        PlayerController.PlayerDeadAction += StopAnimation;
+        PlayerController.PlayerRestartAction += StartAnimation;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.PlayerDeadAction -= StopAnimation;
+        PlayerController.PlayerRestartAction += StartAnimation;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,5 +52,16 @@ public class SwitchAnimation : MonoBehaviour
         {
             animator.Play("Slide");
         }
+    }
+
+    void StopAnimation()
+    {
+        // animator.Stop("Fast Run");
+        animator.enabled = false;
+    }
+
+    void StartAnimation()
+    {
+        animator.enabled = true;
     }
 }
