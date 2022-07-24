@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7279796, g: 0.7869575, b: 0.8505748, a: 1}
+  m_IndirectSpecularColor: {r: 0.72797966, g: 0.7869577, b: 0.85057503, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -739,7 +739,7 @@ PrefabInstance:
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
@@ -1181,7 +1181,7 @@ PrefabInstance:
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
@@ -1521,7 +1521,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 399842804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804a8beca35eb9149a9985672ccd13b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 0166c8897ceebbb47aefc98dd7fc901c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &423269280
@@ -1713,7 +1713,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 447314244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88ea7578ee33ab4cab7ef31f98b75da, type: 3}
+  m_Script: {fileID: 11500000, guid: e84ad1078cc4e9240945d5d5e89c7644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 288817279743979449, guid: 48e423b626627a1439e03dc30c918b19,
@@ -2583,6 +2583,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae7c24c9ad395ff4db77dd33d94578c5, type: 3}
+--- !u!120 &837608817 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 4282309419230615527, guid: e787313dee16d204d9616b5d63f6c478,
+    type: 3}
+  m_PrefabInstance: {fileID: 1684826663}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &843981759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3721,7 +3727,7 @@ PrefabInstance:
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
@@ -5166,6 +5172,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Hook
       objectReference: {fileID: 0}
+    - target: {fileID: 4282309419230615526, guid: e787313dee16d204d9616b5d63f6c478,
+        type: 3}
+      propertyPath: rope
+      value: 
+      objectReference: {fileID: 837608817}
     - target: {fileID: 4282309419614239253, guid: e787313dee16d204d9616b5d63f6c478,
         type: 3}
       propertyPath: m_Name
@@ -5998,6 +6009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1827778989}
   - component: {fileID: 1827778990}
+  - component: {fileID: 1827778991}
   m_Layer: 0
   m_Name: Water4SimpleReflectionSceneCamera
   m_TagString: Untagged
@@ -6012,8 +6024,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827778988}
-  m_LocalRotation: {x: 0.059290852, y: -0.30116636, z: 0.02027425, w: 0.9515106}
-  m_LocalPosition: {x: 6.414255, y: -34.77934, z: -3.938353}
+  m_LocalRotation: {x: -0.11574171, y: -0.29019025, z: -0.0369837, w: 0.94922376}
+  m_LocalPosition: {x: 3.5556018, y: -35.342316, z: -0.9124289}
   m_LocalScale: {x: 1.6416862, y: 1.0015779, z: 1.1337184}
   m_Children: []
   m_Father: {fileID: 803177131}
@@ -6062,6 +6074,15 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!45 &1827778991
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827778988}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1001 &1856993903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6072,7 +6093,7 @@ PrefabInstance:
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2255146970929911324, guid: ae7c24c9ad395ff4db77dd33d94578c5,
         type: 3}
