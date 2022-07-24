@@ -2,126 +2,186 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    private bool turnLeft, turnRight;
-    private float strafeDirection;
-    public float speed = 7.0f;
-    private CharacterController myCharacterController;
-    private Rigidbody rb;
-    // private Animator animator;
+    public static Action PlayerDeadAction = null;
+    public static Action PlayerRestartAction = null;
+    public static Action ObstacleCollisionAction = null; 
 
-    private float jumpTime, jumpSub;
-    private float diveTime, diveSub;
+    public float speed;
+
+    private CharacterController characterController;
+    private Rigidbody rb;
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float jumpSpeed;
-    private bool jump;
-    private Vector3 velocity = Vector3.zero;
+    [SerializeField] private float upperThreshold;
+
+    [SerializeField] private float jumpThreshold;
+    [SerializeField] private float diveThreshold;
+    [SerializeField] private float rightThreshold;
+    [SerializeField] private float leftThreshold;
+
+    [SerializeField] private float gyroHorizontalAngle;
+    [SerializeField] private float gyroVerticalAngle;
+
     [SerializeField] private float lanePos;
     [SerializeField] private float strafeSpeed;
-    private float curX, newXPos, curY;
+
+    private float curX, newXPos, curY, newYPos;
+
+    private Vector3 startingPos;
+
+    private int health;
+    [SerializeField] private int chances;
+    private float damage;
+
+    public Canvas canvas;
 
     // Start is called before the first frame update
     void Start()
     {
-        myCharacterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
-        // animator = GetComponent<Animator>();
         
         transform.position = new Vector3(-lanePos, transform.position.y, transform.position.z);
         newXPos = -lanePos;
-        jump = false;
+
+        health = 100;
+        damage = health/chances;
+        Debug.Log("Damage - " + damage);
+
+        startingPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // velocity.y = Mathf.Sqrt(2f*9.81f*jumpHeight*jumpSub);
-
-        // strafeDirection = Input.GetAxisRaw("Horizontal");
-
-        // transform.Rotate(new Vector3(0f, strafeDirection*90f, 0f));
-
-        // turnLeft = Input.GetKeyDown(KeyCode.LeftArrow);
-        // turnRight = Input.GetKeyDown(KeyCode.RightArrow);
-
-        // myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));
-        myCharacterController.Move(transform.forward * speed * Time.deltaTime);
-        // transform.position = new Vector3(strafeDirection, transform.position.y, transform.position.z);
-        // myCharacterController.Move(transform.right * strafeDirection * Time.deltaTime);
-        // myCharacterController.Move(velocity * Time.deltaTime);
-
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        if(health > 0)
         {
-            newXPos = -lanePos;
-            // animator.Play("Left Diagonal 1");
-            // transform.position = new Vector3(-1f*lanePos, transform.position.y, transform.position.z);
-            // myCharacterController.Move((newXPos - transform.position.x) * Vector3.right);
+            try
+            {
+                //Taking Data From Gyro
+                string gyroValues = BluetoothService.ReadFromBluetooth();
+                string[] angles   = gyroValues.Split(' ');
+                
+                //Executing Action
+                float gyroVerticalAngle = float.Parse(angles[0]);
+                float gyroHorizontalAngle = float.Parse(angles[2]);
+
+                characterController.Move(transform.forward * speed * Time.deltaTime);
+
+                if(gyroHorizontalAngle <= rightThreshold)   //Negative Angle
+                {
+                    newXPos = lanePos;
+                }
+
+                if(gyroHorizontalAngle >= leftThreshold)    //Positive Angle
+                {
+                    newXPos = -lanePos;
+                }
+
+                if(gyroVerticalAngle >= jumpThreshold)      //Positive Angle
+                {
+                    newYPos = jumpHeight;
+                }
+
+                // if(gyroVerticalAngle <= diveThreshold)
+                // {
+                //     new
+                // }
+
+                if(Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    newXPos = -lanePos;
+                }
+
+                if(Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    newXPos = lanePos;
+                }
+
+                if(Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    newYPos = jumpHeight;
+                    // jumpHeight = 10f;
+                    // rb.AddForce(Vector3.up * 20f);
+                }
+
+                if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    newYPos = 0f;
+                    // jumpHeight = 0f;
+                }
+
+                if(Input.GetKeyDown(KeyCode.J))
+                {
+                    // jump = true;
+                    // rb.AddForce(0, 10, 0);
+                    // rb.velocity = Vector3.up * 20f;
+                }
+
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    speed = 50f;
+                }
+                else
+                {
+                    speed = 7f;
+                }
+
+                curX = Mathf.Lerp(curX, newXPos, Time.deltaTime*strafeSpeed);
+                curY = Mathf.Lerp(curY, newYPos, Time.deltaTime*jumpSpeed);
+
+                if(Mathf.Abs(curY - newYPos) <= upperThreshold)
+                {
+                    newYPos = 0f;
+                }
+
+                characterController.Move((curX - transform.position.x) * Vector3.right);
+                characterController.Move((curY - transform.position.y) * Vector3.up);
+            }
+            catch(Exception e)
+            {
+                
+            }
         }
 
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            newXPos = lanePos;
-            // animator.Play("Right Diagonal 1");
-            // myCharacterController.Move((newXPos - transform.position.x) * Vector3.right);
-            // transform.position = new Vector3(lanePos, transform.position.y, transform.position.z);
-        }
-
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            // jump = true;
-            // rb.AddForce(0, 10, 0);
-            rb.velocity = Vector3.up * 20f;
-        }
-
-        if(Input.GetKey(KeyCode.LeftShift))
-        {
-            speed = 50f;
-        }
         else
         {
-            speed = 7f;
+            transform.position = startingPos;
+
+            if(PlayerDeadAction != null)
+            {
+                PlayerDeadAction();
+            }
+
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                if(PlayerRestartAction != null)
+                {
+                    PlayerRestartAction();
+                    health = 100;
+                }
+            }
         }
-        // else
-        // {
-        //     jump = false;
-        // }
-
-        curX = Mathf.Lerp(curX, newXPos, Time.deltaTime*strafeSpeed);
-
-        // if(jump)
-        // {
-        //     curY = Mathf.Lerp(curY, jumpHeight, Time.deltaTime*jumpSpeed);
-        // }
-
-        myCharacterController.Move((curX - transform.position.x) * Vector3.right);
-        // myCharacterController.Move((curY - transform.position.y) * Vector3.Up);
     }
 
-    /*void Update()
+    void OnTriggerEnter(Collider other)
     {
-        turnLeft = Input.GetKeyDown(KeyCode.LeftArrow);
-        turnRight = Input.GetKeyDown(KeyCode.RightArrow);
+        if(other.gameObject.tag == "Obstacle")
+        {
+            if(ObstacleCollisionAction != null)
+            {
+                ObstacleCollisionAction();
+            }
 
-        if (turnLeft)
-            transform.Rotate(new Vector3(0f, -90f, 0f));
-        else if (turnRight)
-            transform.Rotate(new Vector3(0f, 90f, 0f));
+            Destroy(other);
 
-        myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));
-        myCharacterController.Move(transform.forward * speed * Time.deltaTime);
-
-        // if(Input.GetKeyDown(KeyCode.D))
-        // {
-        //     animator.SetBool("isJumping", false);
-        //     animator.SetBool("isDiving", true);
-        // }
-        // else if(Input.GetKeyDown(KeyCode.J))
-        // {
-        //     animator.SetBool("isJumping", true);
-        //     animator.SetBool("isDiving", false);
-        // }
-    }*/
+            if(health > 0)
+                health -= (int)damage;
+        }
+    }
 }

@@ -27,6 +27,13 @@ public class AirplaneController : MonoBehaviour
     private float rollInput;
     public float rollSpeed, rollAcceleration, rollSensitivity;
 
+    [SerializeField] private float maxVerticalThreshold;
+    [SerializeField] private float minVerticalThreshold;
+    [SerializeField] private float maxStrafeThreshold;
+    [SerializeField] private float minStrafeThreshold;
+    [SerializeField] private float strafeRotationAngle;
+    [SerializeField] private float verticalRotationAngle;
+
     private float xAngle, yAngle, zAngle;
     private int shift;
 
@@ -34,11 +41,6 @@ public class AirplaneController : MonoBehaviour
 
     private void OnEnable()
     {
-        // sysMain = sys.main;
-        // sysMain2 = sys2.main;
-
-        // ChildAirplaneController.AsteroidCollissionAction += AsteroidCollission;
-
         GameOverCanvasScript.RetryAction += ResetPosition;
     }
 
@@ -78,6 +80,57 @@ public class AirplaneController : MonoBehaviour
 
         if(moving == 1)
         {
+            try
+            {
+                //Taking Data From Gyro
+                string gyroValues = BluetoothService.ReadFromBluetooth();
+                string[] angles   = gyroValues.Split(' ');
+                
+                //Executing Action
+                float verticalAngle = float.Parse(angles[0]);
+                float strafeAngle = float.Parse(angles[1]);
+
+                // float verticalAngle = 0f;
+                // float strafeAngle = 0f;
+                
+
+                //Forward
+                activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, forwardSpeed, forwardAcceleration);
+                transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
+
+                //Sideways
+                // transform.Rotate(-verticalAngle * lookRotateSpeed * Time.deltaTime, -strafeAngle * lookRotateSpeed * Time.deltaTime, -rollSensitivity * mouseDistance.x * Time.deltaTime * shift, Space.Self);
+
+                if(verticalAngle >= maxVerticalThreshold || Input.GetKey(KeyCode.UpArrow))
+                {
+                    transform.Rotate(-verticalRotationAngle * Time.deltaTime, 0f, 0f);
+                }
+
+                if(strafeAngle >= maxStrafeThreshold || Input.GetKey(KeyCode.RightArrow))
+                {
+                    transform.Rotate(0f, strafeRotationAngle * Time.deltaTime, 0f);
+                }
+
+                if(strafeAngle <= minStrafeThreshold || Input.GetKey(KeyCode.LeftArrow))
+                {
+                    transform.Rotate(0f, -strafeRotationAngle * Time.deltaTime, 0f);
+                }
+    
+                // if(verticalAngle >= maxVerticalThreshold || verticalAngle <= minVerticalThreshold)
+                // {
+                //     transform.Rotate(-verticalRotationAngle * Time.deltaTime, 0f, 0f);
+                // }
+
+                // if(strafeAngle >= maxStrafeThreshold || strafeAngle <= minStrafeThreshold)
+                // {
+                //     transform.Rotate(0f, 0f, -strafeRotationAngle * Time.deltaTime);
+                // }
+            }
+            catch (Exception e)
+            {
+
+            }
+
             if(Input.GetKey(KeyCode.LeftShift))
             {
                 shift = 20;
@@ -87,39 +140,29 @@ public class AirplaneController : MonoBehaviour
                 shift = 15;
             }
 
-            xAngle = transform.rotation.eulerAngles.x;
-            yAngle = transform.rotation.eulerAngles.y;
-            zAngle = transform.rotation.eulerAngles.z;
+            // xAngle = transform.rotation.eulerAngles.x;
+            // yAngle = transform.rotation.eulerAngles.y;
+            // zAngle = transform.rotation.eulerAngles.z;
 
-            lookInput.x = Input.mousePosition.x;
-            lookInput.y = Input.mousePosition.y;
+            // lookInput.x = Input.mousePosition.x;
+            // lookInput.y = Input.mousePosition.y;
 
-            mouseDistance.x = (lookInput.x - screenCenter.x) / screenCenter.y;
-            mouseDistance.y = (lookInput.y - screenCenter.y) / screenCenter.y;
+            // mouseDistance.x = (lookInput.x - screenCenter.x) / screenCenter.y;
+            // mouseDistance.y = (lookInput.y - screenCenter.y) / screenCenter.y;
 
-            mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
+            // mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
 
-            rollInput = Mathf.Lerp(rollInput, Input.GetAxisRaw("Roll"), rollAcceleration * Time.deltaTime);
-
-            // transform.Rotate(-mouseDistance.y * lookRotateSpeed * Time.deltaTime, mouseDistance.x * lookRotateSpeed * Time.deltaTime, rollInput * rollSpeed * mouseDistance.x, Space.Self);
+            // rollInput = Mathf.Lerp(rollInput, Input.GetAxisRaw("Roll"), rollAcceleration * Time.deltaTime);
+         
+            // transform.Rotate(-mouseDistance.y * lookRotateSpeed * Time.deltaTime, mouseDistance.x * lookRotateSpeed * Time.deltaTime, -rollSensitivity * mouseDistance.x * Time.deltaTime * shift, Space.Self);
             
-            transform.Rotate(-mouseDistance.y * lookRotateSpeed * Time.deltaTime, mouseDistance.x * lookRotateSpeed * Time.deltaTime, -rollSensitivity * mouseDistance.x * Time.deltaTime * shift, Space.Self);
+            // activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, forwardSpeed, forwardAcceleration);
+            // // activeStrifeSpeed = Mathf.Lerp(activeStrifeSpeed, Input.GetAxisRaw("Horizontal") * strafeSpeed, strafeAcceleration);
+            // // activeHoverSpeed = Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Hover") * hoverSpeed, hoverAcceleration);
 
-            // Debug.Log(mouseDistance.x);
-
-            // if(mouseDistance.x <= 0.045f && mouseDistance.x >= -0.045f)
-            //     transform.rotation = Quaternion.Euler(xAngle, mouseDistance.x * lookRotateSpeed * Time.deltaTime, 0);
-
-            // activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, Input.GetAxisRaw("Vertical") * forwardSpeed, forwardAcceleration);
-            
-            activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, forwardSpeed, forwardAcceleration);
-            // activeStrifeSpeed = Mathf.Lerp(activeStrifeSpeed, Input.GetAxisRaw("Horizontal") * strafeSpeed, strafeAcceleration);
-            // activeHoverSpeed = Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Hover") * hoverSpeed, hoverAcceleration);
-
-            // transform.Rotate()
-            transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
-            // transform.position += transform.right * activeStrifeSpeed * Time.deltaTime;
-            // transform.position += transform.up * activeHoverSpeed * Time.deltaTime;
+            // transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
+            // // transform.position += transform.right * activeStrifeSpeed * Time.deltaTime;
+            // // transform.position += transform.up * activeHoverSpeed * Time.deltaTime;
         }
         else
         {
