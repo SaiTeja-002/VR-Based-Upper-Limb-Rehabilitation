@@ -8,16 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MenuScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/FishingScene.unity
-    guid: 757a16b1f44122a489fa3794a96c5f38
-  - enabled: 1
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/AirplaneScene.unity
     guid: 305385428b39e4a4fb59453d54245547
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WristScene.unity
     guid: 7d6acf99f14ef844eb6b98c56dece42a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FingerScene.unity
     guid: b7467df25164f0c499b0c745619780c5
+  - enabled: 1
+    path: Assets/Scenes/FishingScene.unity
+    guid: a0e77dc149201b849ababc0ed9a2eb00
   m_configObjects: {}
