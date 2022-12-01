@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MenuScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
@@ -18,9 +18,14 @@ EditorBuildSettings:
     path: Assets/Scenes/WristScene.unity
     guid: 7d6acf99f14ef844eb6b98c56dece42a
   - enabled: 0
-    path: Assets/Scenes/FingerScene.unity
-    guid: b7467df25164f0c499b0c745619780c5
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/FishingScene.unity
-    guid: a0e77dc149201b849ababc0ed9a2eb00
-  m_configObjects: {}
+    path: Assets/Scenes/WaterAndGlasses.unity
+    guid: 296cf5c5a01ead9419380021407bb9c9
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1fbdb3ab5650d4e459ba2adae692ec83,
+      type: 2}
